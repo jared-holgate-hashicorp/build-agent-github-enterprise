@@ -1,6 +1,6 @@
 # escape=`
 
-FROM mcr.microsoft.com/windows/servercore:2004
+FROM mcr.microsoft.com/windows/servercore:latest
 
 ADD runner-setup.ps1 C:/runner-setup.ps1
 
