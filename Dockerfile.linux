@@ -6,7 +6,7 @@ RUN apt-get update && \
 
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
-RUN powershell -Command " \
+RUN pwsh -Command " \
     $WebResponse = Invoke-WebRequest -Uri https://github.com/actions/runner/releases/latest -UseBasicParsing ; \
     $Link = $WebResponse.Links | Where { $_.href -like '*-win-x64-*' } | Select 'href' ; \
     $DownloadUrl = 'https://github.com{0}' -f $Link.href ; \
@@ -17,5 +17,5 @@ RUN powershell -Command " \
 
 COPY ConfigureAndRun.ps1 ConfigureAndRun.ps1
 
-ENTRYPOINT ["powershell"]
+ENTRYPOINT ["pwsh"]
 CMD ["ConfigureAndRun.ps1"]
