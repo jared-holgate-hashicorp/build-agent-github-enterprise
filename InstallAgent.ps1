@@ -11,7 +11,7 @@ else
   $filter = "*-linux-x64-*"
   $fileName = "actions-runner-latest.tar.gz"
 }
-$fileName = "actions-runner-latest.zip"
+
 $Link = $WebResponse.Links | Where { $_.href -like $filter } | Select 'href' ; 
 $DownloadUrl = 'https://github.com{0}' -f $Link.href ; 
 
