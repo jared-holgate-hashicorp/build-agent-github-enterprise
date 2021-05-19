@@ -7,14 +7,16 @@ RUN useradd -m actions && \
 
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
-WORKDIR /actions-runner
+WORKDIR /home/actions/actions-runner
 
 COPY InstallAgent.ps1 InstallAgent.ps1
 
 RUN ["pwsh", "InstallAgent.ps1", "linux"]
 
 USER actions
+
 COPY ConfigureAndRun.ps1 ConfigureAndRun.ps1
 
 ENTRYPOINT ["pwsh"]
+
 CMD ["ConfigureAndRun.ps1", "linux"]
