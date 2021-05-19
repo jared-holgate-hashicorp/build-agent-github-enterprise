@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/windows/servercore
+FROM mcr.microsoft.com/windows/servercore:20H2
 
 SHELL [ "powershell" ]
 
