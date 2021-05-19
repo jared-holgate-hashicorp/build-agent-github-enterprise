@@ -30,7 +30,7 @@ jobs:
           prerelease: false
 
       - name: Build image
-        run: docker build --file Dockerfile --tag $env:IMAGE_NAME .
+        run: docker build --file Dockerfile.windows --tag $env:IMAGE_NAME .
 
       - name: Log into registry
         run: echo "gLRKrdRzfLpFhYJCqSh0IHmJ=ySVfNg8" | docker login maplesterraform.azurecr.io -u maplesterraform --password-stdin
