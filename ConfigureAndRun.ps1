@@ -1,4 +1,4 @@
-param($platformm = "windows")
+param($platform = "windows")
 
 $token = $env:GH_RUNNER_TOKEN
 $organisation = $env:GH_RUNNER_ORG
