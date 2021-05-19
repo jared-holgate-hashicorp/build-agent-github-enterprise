@@ -1,7 +1,14 @@
 param($platformm = "windows")
 
 $WebResponse = Invoke-WebRequest -Uri https://github.com/actions/runner/releases/latest -UseBasicParsing ; 
-$filter = $platform -eq "windows" ? "*-win-x64-*" : "*-linux-x64-*" ;
+if($platform -eq "windows")
+{
+  $filter = "*-win-x64-*"
+}
+elase
+{
+  $filter = "*-linux-x64-*"
+}
 $Link = $WebResponse.Links | Where { $_.href -like $filter } | Select 'href' ; 
 $DownloadUrl = 'https://github.com{0}' -f $Link.href ; 
 Write-Output "Got Download Url $DownloadUrl. Downloading now..."
