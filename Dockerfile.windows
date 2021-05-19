@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/powershell:lts-windowsservercore-1909
+FROM mcr.microsoft.com/powershell:lts-windowsservercore-2004
 
 WORKDIR /actions-runner
 
