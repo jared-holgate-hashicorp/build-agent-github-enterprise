@@ -1,16 +1,15 @@
-# escape=`
+SHELL [ "powershell" ]
 
 FROM mcr.microsoft.com/windows/servercore:latest
 
-ADD runner-setup.ps1 C:/runner-setup.ps1
+CMD mkdir actions-runner; cd actions-runner
 
 WORKDIR /actions-runner
 
-SHELL [ "powershell" ]
+CMD Invoke-WebRequest -Uri https://github.com/actions/runner/releases/latest/download/actions-runner-win-x64-2.278.0.zip -OutFile actions-runner-win-x64-2.278.0.zip
 
-RUN "Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force; `
-    iwr -useb get.scoop.sh | iex; `
-    scoop install git"
+CMD Add-Type -AssemblyName System.IO.Compression.FileSystem ; [System.IO.Compression.ZipFile]::ExtractToDirectory("$PWD/actions-runner-win-x64-2.278.0.zip", "$PWD")
 
-ADD runner.ps1 C:/runner.ps1
-CMD C:/runner.ps1
+CMD ./config.cmd --url https://github.com/MaplesGroup --token AAMJTKBOUM545ADOIOLA2PDAUPRRW
+
+RUN ./run.cmd
