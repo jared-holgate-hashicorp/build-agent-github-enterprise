@@ -1,13 +1,12 @@
-FROM mcr.microsoft.com/powershell:lts-windowsservercore-2004
+FROM mcr.microsoft.com/windows/servercore:ltsc2019
 
 WORKDIR /actions-runner
 
 COPY InstallAgent.ps1 InstallAgent.ps1
 
-RUN ["pwsh", "InstallAgent.ps1", "windows"]
+RUN powershell .\InstallAgent.ps1 windows
 
 COPY ConfigureAndRun.ps1 ConfigureAndRun.ps1
 
-ENTRYPOINT ["pwsh"]
-CMD ["ConfigureAndRun.ps1", "windows"]
+CMD powershell .\ConfigureAndRun.ps1 windows
 
