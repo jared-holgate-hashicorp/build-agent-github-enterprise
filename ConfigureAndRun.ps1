@@ -11,7 +11,6 @@ if($platform -eq "windows")
 }
 else
 {
-  export RUNNER_ALLOW_RUNASROOT="1"
   ./config.sh --unattended --url $gitHubUrl --token $token
   ./run.sh
 }
