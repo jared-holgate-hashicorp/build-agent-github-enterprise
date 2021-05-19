@@ -4,10 +4,10 @@ WORKDIR /actions-runner
 
 COPY InstallAgent.ps1 InstallAgent.ps1
 
-RUN ["powershell", ".\InstallAgent.ps1", "windows"]
+RUN ["pwsh", "InstallAgent.ps1", "windows"]
 
 COPY ConfigureAndRun.ps1 ConfigureAndRun.ps1
 
-ENTRYPOINT ["powershell"]
-CMD [".\ConfigureAndRun.ps1", "windows"]
+ENTRYPOINT ["pwsh"]
+CMD ["ConfigureAndRun.ps1", "windows"]
 
