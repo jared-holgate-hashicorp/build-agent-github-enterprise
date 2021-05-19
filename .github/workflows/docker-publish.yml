@@ -41,5 +41,5 @@ jobs:
           $IMAGE_VERSION = "1.0.${{ github.run_number }}"
           $ImageTag = "{0}:{1}" -f $IMAGE_ID, $IMAGE_VERSION
           Write-Output $ImageTag
-          docker tag $IMAGE_NAME $ImageTag
+          docker tag $env:IMAGE_NAME $ImageTag
           docker push $ImageTag
