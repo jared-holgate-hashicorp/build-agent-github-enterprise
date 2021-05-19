@@ -4,10 +4,12 @@ $WebResponse = Invoke-WebRequest -Uri https://github.com/actions/runner/releases
 if($platform -eq "windows")
 {
   $filter = "*-win-x64-*"
+  $fileName = "actions-runner-latest.zip"
 }
 else
 {
   $filter = "*-linux-x64-*"
+  $fileName = "actions-runner-latest.tar.gz"
 }
 $fileName = "actions-runner-latest.zip"
 $Link = $WebResponse.Links | Where { $_.href -like $filter } | Select 'href' ; 
