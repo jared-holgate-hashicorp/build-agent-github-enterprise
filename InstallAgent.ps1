@@ -1,4 +1,4 @@
-param($platformm = "windows")
+param($platform = "windows")
 
 $WebResponse = Invoke-WebRequest -Uri https://github.com/actions/runner/releases/latest -UseBasicParsing ; 
 if($platform -eq "windows")
