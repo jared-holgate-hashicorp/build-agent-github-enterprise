@@ -16,24 +16,27 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: 1.0.${{ github.run_number }}
+          release_name: 1.0.${{ github.run_number }}
+          body: |
+            CI Release for 1.0.${{ github.run_number }}
+          draft: false
+          prerelease: false
+
       - name: Build image
-        run: docker build --file Dockerfile --tag $IMAGE_NAME .
+        run: docker build --file Dockerfile --tag $env:IMAGE_NAME .
 
       - name: Log into registry
         run: echo "gLRKrdRzfLpFhYJCqSh0IHmJ=ySVfNg8" | docker login maplesterraform.azurecr.io -u maplesterraform --password-stdin
 
       - name: Push image
         run: |
-          IMAGE_ID=maplesterraform.azurecr.io/${{ github.repository }}/$IMAGE_NAME
-          # Change all uppercase to lowercase
-          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-          # Strip git ref prefix from version
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-          # Strip "v" prefix from tag name
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-          # Use Docker `latest` tag convention
-          [ "$VERSION" == "main" ] && VERSION=latest
-          echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION
-          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
+          $IMAGE_ID = maplesterraform.azurecr.io/${{ github.repository }}/$env:IMAGE_NAME
+          docker tag $IMAGE_NAME $IMAGE_ID:1.0.${{ github.run_number }}
+          docker push $IMAGE_ID:1.0.${{ github.run_number }}
