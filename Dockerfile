@@ -1,7 +1,5 @@
 FROM mcr.microsoft.com/windows/servercore:ltsc2019
 
-RUN mkdir actions-runner; cd actions-runner
-
 WORKDIR /actions-runner
 
 RUN powershell -Command \
