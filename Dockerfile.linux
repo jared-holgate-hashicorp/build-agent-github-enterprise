@@ -1,6 +1,7 @@
 FROM mcr.microsoft.com/powershell
 
-RUN apt-get update && \
+RUN useradd -m actions && \
+  apt-get update && \
   apt-get install python curl ruby -y && \
   apt-get clean
 
@@ -12,6 +13,7 @@ COPY InstallAgent.ps1 InstallAgent.ps1
 
 RUN ["pwsh", "InstallAgent.ps1", "linux"]
 
+USER actions
 COPY ConfigureAndRun.ps1 ConfigureAndRun.ps1
 
 ENTRYPOINT ["pwsh"]
