@@ -8,12 +8,12 @@ RUN powershell -Command " \
     $DownloadUrl = 'https://github.com$($Link.href)'; \
     Invoke-WebRequest -Uri $DownloadUrl -OutFile actions-runner-win-x64-latest.zip ; \
     Add-Type -AssemblyName System.IO.Compression.FileSystem ; [System.IO.Compression.ZipFile]::ExtractToDirectory('{0}/actions-runner-win-x64-latest.zip' -f $PWD, $PWD) ; \
-    Remove-Item actions-runner-win-x64-latest.zip -Force \
+    Remove-Item actions-runner-win-x64-latest.zip -Force ; \
     "
 
 CMD powershell -Command " \
     $token = $env:GH_RUNNER_TOKEN ; \
     $organisation = $env:GH_RUNNER_ORG ; \
     ./config.cmd --unattended --url https://github.com/$organisation --token $token ; \
-    ./run.cmd
+    ./run.cmd ; \
     "
