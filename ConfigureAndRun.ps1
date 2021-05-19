@@ -9,7 +9,7 @@ if($platform -eq "windows")
   ./config.cmd --unattended --url $gitHubUrl --token $token
   ./run.cmd
 }
-elase
+else
 {
   ./config.sh --unattended --url $gitHubUrl --token $token
   ./run.sh
