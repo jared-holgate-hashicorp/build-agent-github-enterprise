@@ -9,13 +9,14 @@ else
 {
   $filter = "*-linux-x64-*"
 }
+$fileName = "actions-runner-latest.zip"
 $Link = $WebResponse.Links | Where { $_.href -like $filter } | Select 'href' ; 
 $DownloadUrl = 'https://github.com{0}' -f $Link.href ; 
 Write-Output "Got Download Url $DownloadUrl. Downloading now..."
-$result = Invoke-WebRequest -Uri $DownloadUrl -OutFile actions-runner--latest.zip ; 
+$result = Invoke-WebRequest -Uri $DownloadUrl -OutFile $fileName ; 
 $currentFolder = Get-Location
-Write-Output "Got actions-runner-latest.zip. Extracting now..."
-$result = Expand-Archive -Path actions-runner-latest.zip -DestinationPath $currentFolder ; 
-Write-Output "Extracted actions-runner-latest.zip. Cleaning up now..."
-Remove-Item actions-runner-latest.zip -Force ;
+Write-Output "Got $fileName. Extracting now..."
+$result = Expand-Archive -Path $fileName -DestinationPath $currentFolder ; 
+Write-Output "Extracted $fileName. Cleaning up now..."
+Remove-Item $fileName -Force ;
 Write-Output "All done..."
