@@ -10,9 +10,9 @@ WORKDIR /actions-runner
 
 COPY InstallAgent.ps1 InstallAgent.ps1
 
-RUN ["pwsh", "InstallAgent.ps1"]
+RUN ["pwsh", "InstallAgent.ps1", "linux"]
 
 COPY ConfigureAndRun.ps1 ConfigureAndRun.ps1
 
 ENTRYPOINT ["pwsh"]
-CMD ["ConfigureAndRun.ps1"]
+CMD ["ConfigureAndRun.ps1", "linux"]
