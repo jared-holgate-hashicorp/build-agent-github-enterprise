@@ -37,6 +37,6 @@ jobs:
 
       - name: Push image
         run: |
-          $IMAGE_ID = maplesterraform.azurecr.io/${{ github.repository }}/$env:IMAGE_NAME
+          $IMAGE_ID = "maplesterraform.azurecr.io/${{ github.repository }}/$env:IMAGE_NAME"
           docker tag $IMAGE_NAME $IMAGE_ID:1.0.${{ github.run_number }}
           docker push $IMAGE_ID:1.0.${{ github.run_number }}
