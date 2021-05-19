@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/windows/servercore:ltsc2019
 
 WORKDIR /actions-runner
 
-RUN pwsh -Command " \
+RUN powershell -Command " \
     $WebResponse = Invoke-WebRequest -Uri https://github.com/actions/runner/releases/latest -UseBasicParsing ; \
     $Link = $WebResponse.Links | Where { $_.href -like '*-win-x64-*' } | Select 'href' ; \
     $DownloadUrl = 'https://github.com{0}' -f $Link.href ; \
@@ -13,6 +13,6 @@ RUN pwsh -Command " \
 
 COPY ConfigureAndRun.ps1 ConfigureAndRun.ps1
 
-ENTRYPOINT ["pwsh"]
+ENTRYPOINT ["powershell"]
 CMD ["ConfigureAndRun.ps1"]
 
