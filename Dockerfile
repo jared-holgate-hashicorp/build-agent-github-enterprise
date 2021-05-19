@@ -1,6 +1,6 @@
-SHELL [ "powershell" ]
-
 FROM mcr.microsoft.com/windows/servercore
+
+SHELL [ "powershell" ]
 
 RUN mkdir actions-runner; cd actions-runner
 
