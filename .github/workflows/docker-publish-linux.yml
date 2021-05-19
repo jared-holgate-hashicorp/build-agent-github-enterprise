@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  IMAGE_NAME: maples-terraform-cloud-agent
+  IMAGE_NAME: maples-terraform-cloud-agent-linux
 
 jobs:
   push:
