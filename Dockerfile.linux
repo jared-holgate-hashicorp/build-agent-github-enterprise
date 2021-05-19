@@ -1,0 +1,10 @@
+FROM mcr.microsoft.com/powershell
+
+RUN apt-get update && \
+  apt-get install python curl ruby -y && \
+  apt-get clean
+
+RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+
+ENTRYPOINT ["/bin/tfc-agent"]
+CMD ["-single"]
