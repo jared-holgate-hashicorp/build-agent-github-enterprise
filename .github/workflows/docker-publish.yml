@@ -37,7 +37,7 @@ jobs:
 
       - name: Push image
         run: |
-          $IMAGE_ID = "maplesterraform.azurecr.io/${{ github.repository }}/$env:IMAGE_NAME"
+          $IMAGE_ID = "maplesterraform.azurecr.io/${{ github.repository }}/$env:IMAGE_NAME".ToLower()
           $IMAGE_VERSION = "1.0.${{ github.run_number }}"
           $ImageTag = "{0}:{1}" -f $IMAGE_ID, $IMAGE_VERSION
           Write-Output $ImageTag
