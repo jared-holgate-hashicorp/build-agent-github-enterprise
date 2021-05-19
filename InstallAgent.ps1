@@ -12,11 +12,21 @@ else
 $fileName = "actions-runner-latest.zip"
 $Link = $WebResponse.Links | Where { $_.href -like $filter } | Select 'href' ; 
 $DownloadUrl = 'https://github.com{0}' -f $Link.href ; 
+
 Write-Output "Got Download Url $DownloadUrl. Downloading now..."
 $result = Invoke-WebRequest -Uri $DownloadUrl -OutFile $fileName ; 
+
 $currentFolder = Get-Location
 Write-Output "Got $fileName. Extracting now..."
-$result = Expand-Archive -Path $fileName -DestinationPath $currentFolder ; 
+if($platform -eq "windows")
+{
+  $result = Expand-Archive -Path $fileName -DestinationPath $currentFolder ; 
+}
+else
+{
+  tar xzf ./$fileName
+}
+
 Write-Output "Extracted $fileName. Cleaning up now..."
 Remove-Item $fileName -Force ;
 Write-Output "All done..."
