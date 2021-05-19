@@ -11,10 +11,8 @@ RUN powershell -Command " \
     Remove-Item actions-runner-win-x64-latest.zip -Force ; \
     "
 
-CMD powershell -Command " \
-    $token = $env:GH_RUNNER_TOKEN ; \
-    $organisation = $env:GH_RUNNER_ORG ; \
-    $gitHubUrl = 'https://github.com/{0}' -f $organisation ; \
-    ./config.cmd --unattended --url $gitHubUrl --token $token ; \
-    ./run.cmd ; \
-    "
+COPY ConfigureAndRun.ps1 ConfigureAndRun.ps1
+
+ENTRYPOINT ["powershell"]
+CMD ["ConfigureAndRun.ps1"]
+
