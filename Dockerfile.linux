@@ -6,15 +6,11 @@ RUN apt-get update && \
 
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
-RUN pwsh -Command " \
-    $WebResponse = Invoke-WebRequest -Uri https://github.com/actions/runner/releases/latest -UseBasicParsing ; \
-    $Link = $WebResponse.Links | Where { $_.href -like '*-win-x64-*' } | Select 'href' ; \
-    $DownloadUrl = 'https://github.com{0}' -f $Link.href ; \
-    Invoke-WebRequest -Uri $DownloadUrl -OutFile actions-runner-win-x64-latest.zip ; \
-    $currentFolder = Get-Location ; \
-    Expand-Archive -Path actions-runner-win-x64-latest.zip -DestinationPath $currentFolder ; \
-    Remove-Item actions-runner-win-x64-latest.zip -Force ; \
-    "
+WORKDIR /actions-runner
+
+COPY InstallAgent.ps1 InstallAgent.ps1
+
+RUN ["pwsh", "InstallAgent.ps1"]
 
 COPY ConfigureAndRun.ps1 ConfigureAndRun.ps1
 
