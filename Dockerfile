@@ -1,15 +1,27 @@
 SHELL [ "powershell" ]
 
-FROM mcr.microsoft.com/windows/servercore:latest
+FROM mcr.microsoft.com/windows/servercore
 
-CMD mkdir actions-runner; cd actions-runner
+RUN mkdir actions-runner; cd actions-runner
 
 WORKDIR /actions-runner
 
-CMD Invoke-WebRequest -Uri https://github.com/actions/runner/releases/latest/download/actions-runner-win-x64-2.278.0.zip -OutFile actions-runner-win-x64-2.278.0.zip
+RUN  $WebResponse = Invoke-WebRequest -Uri https://github.com/actions/runner/releases/latest -UseBasicParsing; \
+$Link = $WebResponse.Links | Where { $_.href -like "*-win-x64-*" }  | Select href; \
+$DownloadUrl = "https://github.com$($Link.href)"; \
+Invoke-WebRequest -Uri $DownloadUrl -OutFile actions-runner-win-x64-latest.zip; \
+Add-Type -AssemblyName System.IO.Compression.FileSystem ; [System.IO.Compression.ZipFile]::ExtractToDirectory("$PWD/actions-runner-win-x64-latest.zip", "$PWD"); \
+Remove-Item actions-runner-win-x64-latest.zip -Force
 
-CMD Add-Type -AssemblyName System.IO.Compression.FileSystem ; [System.IO.Compression.ZipFile]::ExtractToDirectory("$PWD/actions-runner-win-x64-2.278.0.zip", "$PWD")
-
-CMD ./config.cmd --url https://github.com/MaplesGroup --token AAMJTKBOUM545ADOIOLA2PDAUPRRW
-
-RUN ./run.cmd
+CMD $token = $env:GH_RUNNER_TOKEN; \
+if($token -eq $null) \
+{ \
+    Write-Output "Token Missing!"; \
+} \
+$organisation = $env:GH_RUNNER_ORG; \
+if($organisation -eq $null) \
+{ \
+    Write-Output "Organisation Missing!"; \
+} \
+./config.cmd --url https://github.com/$organisation --token $token \
+./run.cmd
