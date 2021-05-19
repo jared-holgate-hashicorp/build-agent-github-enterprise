@@ -5,7 +5,7 @@ if($platform -eq "windows")
 {
   $filter = "*-win-x64-*"
 }
-elase
+else
 {
   $filter = "*-linux-x64-*"
 }
