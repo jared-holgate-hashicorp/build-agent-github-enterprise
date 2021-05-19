@@ -23,5 +23,5 @@ if($organisation -eq $null) \
 { \
     Write-Output "Organisation Missing!"; \
 } \
-./config.cmd --url https://github.com/$organisation --token $token \
+./config.cmd --unattended --url https://github.com/$organisation --token $token \
 ./run.cmd
