@@ -20,11 +20,11 @@ jobs:
         run: docker build . --file Dockerfile.linux --tag $IMAGE_NAME
 
       - name: Log into registry
-        run: echo "gLRKrdRzfLpFhYJCqSh0IHmJ=ySVfNg8" | docker login maplesterraform.azurecr.io -u maplesterraform --password-stdin
+        run: echo "${{ secrets.BUILD_CONTAINER_REGISTRY_PASSWORD }}" | docker login ${{ secrets.BUILD_CONTAINER_REGISTRY_URL }} -u ${{ secrets.BUILD_CONTAINER_REGISTRY_USERNAME }} --password-stdin
 
       - name: Push image
         run: |
-          IMAGE_ID=maplesterraform.azurecr.io/${{ github.repository }}/$IMAGE_NAME
+          IMAGE_ID=${{ secrets.BUILD_CONTAINER_REGISTRY_URL }}/${{ github.repository }}/$IMAGE_NAME
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
           # Strip git ref prefix from version
