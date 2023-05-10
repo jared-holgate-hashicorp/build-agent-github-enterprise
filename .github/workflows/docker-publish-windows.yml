@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  IMAGE_NAME: maples-github-actions-agent-windows
+  IMAGE_NAME: github-actions-agent-windows
 
 jobs:
   push:
