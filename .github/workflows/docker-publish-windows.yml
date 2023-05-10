@@ -33,11 +33,11 @@ jobs:
         run: docker build --file Dockerfile.windows --tag $env:IMAGE_NAME .
 
       - name: Log into registry
-        run: echo "gLRKrdRzfLpFhYJCqSh0IHmJ=ySVfNg8" | docker login maplesterraform.azurecr.io -u maplesterraform --password-stdin
+        run: echo "${{ secrets.BUILD_CONTAINER_REGISTRY_PASSWORD }}" | docker login ${{ secrets.BUILD_CONTAINER_REGISTRY_URL }} -u ${{ secrets.BUILD_CONTAINER_REGISTRY_USERNAME }} --password-stdin
 
       - name: Push image
         run: |
-          $IMAGE_ID = "maplesterraform.azurecr.io/${{ github.repository }}/$env:IMAGE_NAME".ToLower()
+          $IMAGE_ID = "${{ secrets.BUILD_CONTAINER_REGISTRY_URL }}/${{ github.repository }}/$env:IMAGE_NAME".ToLower()
           $IMAGE_VERSION = "1.0.${{ github.run_number }}"
           $ImageTag = "{0}:{1}" -f $IMAGE_ID, $IMAGE_VERSION
           Write-Output $ImageTag
